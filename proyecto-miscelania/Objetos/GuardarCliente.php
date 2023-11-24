@@ -8,4 +8,4 @@ $objClientes->guardarCliente();
 echo $objClientes->getNombre();
 echo $objClientes->getDireccion();
 echo $objClientes->getTelefono();
-?>
+?>C

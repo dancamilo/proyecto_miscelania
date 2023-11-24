@@ -6,7 +6,7 @@ class Clientes {
     private $nombre;
     private $direccion;
     private $telefono;
-    const TABLA = 'Clientes';
+    const TABLA = 'clientes';
 
     // Getters y Setters
     public function getId() {
@@ -51,16 +51,20 @@ class Clientes {
     }
 
     public function guardarCliente(){
-        {
-            $conexion = new Conexion();
-            $consulta = $conexion->prepare('INSERT INTO ' .self::TABLA .'(NombreCli, DireccionCli, Telefono)
-            VALUES (:NombreCli, :DireccionCli, :Telefono)');
-            $consulta -> bindParam(':NombreCli', $this->nombre);
-            $consulta -> bindParam(':DireccionCli', $this->direccion);
-            $consulta -> bindParam(':Telefono', $this->telefono);
-            $consulta->execute();
-            $this->id_cliente = $conexion->lastInsertId();
-        }
+        
+            try {
+                $conexion = new Conexion();
+                $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA . ' (NombreCli, DireccionCli, Telefono)
+                VALUES (:NombreCli, :DireccionCli, :Telefono)');
+                $consulta -> bindParam(':NombreCli', $this->nombre);
+                $consulta -> bindParam(':DireccionCli', $this->direccion);
+                $consulta -> bindParam(':Telefono', $this->telefono);
+                $consulta->execute();
+                $this->id_cliente = $conexion->lastInsertId();
+            } catch (PDOException $th) {
+                echo 'Error' . $th->getMessage();
+            }
+        
         $conexion = null;
     }
 

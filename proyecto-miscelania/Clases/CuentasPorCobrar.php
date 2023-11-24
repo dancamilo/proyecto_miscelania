@@ -52,13 +52,15 @@ class Cuentas {
     public function guardarCuenta(){
         {
             $conexion = new Conexion();
-            $consulta = $conexion->prepare('INSERT INTO ' .self::TABLA .'(Monto_Debido, Fecha_Limite, ID_ClienteFK)
+            $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA . ' (Monto_Debido, Fecha_Limite, ID_ClienteFK) 
             VALUES (:Monto_Debido, :Fecha_Limite, :ID_ClienteFK)');
             $consulta -> bindParam(':Monto_Debido', $this->Monto_Debido);
             $consulta -> bindParam(':Fecha_Limite', $this->Fecha_Limite);
             $consulta -> bindParam(':ID_ClienteFK', $this->ID_ClienteFK);
             $consulta->execute();
             $this->id_cuenta = $conexion->lastInsertId();
+
+            header('Location: index.html');
         }
         $conexion = null;
     }
